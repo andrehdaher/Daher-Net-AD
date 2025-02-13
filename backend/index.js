@@ -520,7 +520,7 @@ app.put("/api/passports/:id", upload.array("idImages", 10), async (req, res) => 
 
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../front/hifi', 'Login.jsx'));
+  res.sendFile(path.join(__dirname, '../front/hifi', 'index.html'));
 });
 
 
