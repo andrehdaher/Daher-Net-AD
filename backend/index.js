@@ -3,7 +3,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const User = require("./models/userShcema");
@@ -59,8 +58,8 @@ app.post("/signup", async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
 
-  const hashPassword = await bcrypt.hash(password, 10);
-  await User.create({ email, password: hashPassword, role });
+  // لا حاجة لتشفير كلمة المرور، فقط خزنها كما هي
+  await User.create({ email, password, role });
 
   res.status(200).json({ message: "Signup successful" });
 });
@@ -75,8 +74,8 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    const pass = await bcrypt.compare(password, user.password);
-    if (!pass) {
+    // مقارنة كلمة المرور المدخلة بكلمة المرور المخزنة كما هي
+    if (password !== user.password) {
       return res.status(400).json({ message: "Invalid password" });
     }
 
@@ -90,6 +89,7 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error logging in" });
   }
 });
+
 
 // ✅ إضافة مستخدم جديد
 app.post("/add-user", async (req, res) => {
