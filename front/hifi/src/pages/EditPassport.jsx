@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom"; // استخدام useNavigate بدلاً من useHistory
-import Navbar from "../../compontes/Navbar"; // استيراد الـ Navbar
+import Navbar from "../compontes/Navbar"; // استيراد الـ Navbar
 import toast from "react-hot-toast";
 
 const EditPassport = () => {

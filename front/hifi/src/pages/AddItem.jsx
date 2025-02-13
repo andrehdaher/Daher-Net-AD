@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../compontes/Navbar";
+import Navbar from "../compontes/Navbar";
 import toast from "react-hot-toast";
 import axios from "axios"; // استيراد Axios لإرسال الطلب
 

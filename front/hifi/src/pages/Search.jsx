@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../../compontes/Navbar'
+import Navbar from '../compontes/Navbar'
 import axios from 'axios'
 import { useState } from "react";
 

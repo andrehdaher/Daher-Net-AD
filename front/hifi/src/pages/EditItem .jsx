@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../../compontes/Navbar";
+import Navbar from "../compontes/Navbar";
 import toast from "react-hot-toast";
 
 const EditItem = () => {

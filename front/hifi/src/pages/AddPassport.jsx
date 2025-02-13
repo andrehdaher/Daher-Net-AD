@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Navbar from "../../compontes/Navbar"; // استيراد الـ Navbar
+import Navbar from "../compontes/Navbar"; // استيراد الـ Navbar
 
 const AddPassport = () => {
   const [fullName, setFullName] = useState("");

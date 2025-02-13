@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "../../compontes/Navbar"; // استيراد الـ Navbar
+import Navbar from "../compontes/Navbar"; // استيراد الـ Navbar
 import { Link } from "react-router-dom"; // للوصول إلى صفحة إضافة جواز جديد
 
 const ViewPassports = () => {
