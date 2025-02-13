@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
-app.use(express.static(path.join(__dirname, 'front')));
+app.use(express.static(path.join(__dirname, 'front/hifi')));
 
 
 mongoose
@@ -48,7 +48,7 @@ const verifyRole = (role) => {
 };
 
 // ✅ تسجيل مستخدم جديد (Signup)
-app.post("/signup", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   const { email, password, role } = req.body;
   if (!email || !password || !role) {
     return res.status(400).json({ message: "Enter all fields" });
@@ -66,7 +66,7 @@ app.post("/signup", async (req, res) => {
 });
 
 // ✅ تسجيل الدخول (Login)
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   
   try {
@@ -92,7 +92,7 @@ app.post("/login", async (req, res) => {
 });
 
 // ✅ جلب بيانات مستخدم بواسطة البريد الإلكتروني
-app.get("/user/:email", async (req, res) => {
+app.get("/api/user/:email", async (req, res) => {
   const { email } = req.params;
 
   
@@ -118,7 +118,7 @@ app.get("/user/:email", async (req, res) => {
 
 
 // ✅ إضافة مستخدم جديد
-app.post("/add-user", async (req, res) => {
+app.post("/api/add-user", async (req, res) => {
   try {
     const { fullName, ip, tower, date, speed, user, password, required, paid, email } = req.body;
 
@@ -132,7 +132,7 @@ app.post("/add-user", async (req, res) => {
 });
   
 // ✅ حذف مستخدم
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/api/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     await addUser.findByIdAndDelete(id);
@@ -143,7 +143,7 @@ app.delete("/delete/:id", async (req, res) => {
 });
 
 // ✅ جلب جميع المستخدمين (للمشرف فقط)
-app.get("/", async (req, res) => {
+app.get("/api/", async (req, res) => {
   try {
     const users = await addUser.find();
     res.status(200).json(users);
@@ -155,7 +155,7 @@ app.get("/", async (req, res) => {
 
 
 // ✅ تحديث بيانات المستخدم
-app.put("/update/:id", async (req, res) => {
+app.put("/api/update/:id", async (req, res) => {
   const { id } = req.params;
   const updateFields = req.body;
   
@@ -179,7 +179,7 @@ app.put("/update/:id", async (req, res) => {
 
 
 // 📌 دالة إضافة المنتج (POST)
-app.post("/products", async (req, res) => {
+app.post("/api/products", async (req, res) => {
 
   try {
     const { name, type, wholesalePrice, salePrice, quantity } = req.body;
@@ -216,7 +216,7 @@ app.post("/products", async (req, res) => {
 
 
 // ✅ 📌 جلب المنتجات
-app.get("/products", async (req, res) => {
+app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find(); // جلب جميع المنتجات
     res.json(products);
@@ -226,7 +226,7 @@ app.get("/products", async (req, res) => {
 });
 
 // ✅ 📌 تحديث المنتج عند البيع
-app.put("/products/:id", async (req, res) => {
+app.put("/api/products/:id", async (req, res) => {
   try {
     const { quantity, totalSales } = req.body;
     await Product.findByIdAndUpdate(req.params.id, { quantity, totalSales });
@@ -238,7 +238,7 @@ app.put("/products/:id", async (req, res) => {
 
 
 // دالة تحديث المنتج بناءً على ID
-app.put("/productss/:id", async (req, res) => {
+app.put("/api/productss/:id", async (req, res) => {
   const { id } = req.params; // الحصول على الـ ID من URL
   const updatedProduct = req.body; // الحصول على البيانات من الجسم (body)
 
@@ -268,7 +268,7 @@ app.put("/productss/:id", async (req, res) => {
 
 
 // 🔹 حفظ عملية البيع في قاعدة البيانات
-app.post("/", async (req, res) => {
+app.post("/api/", async (req, res) => {
   try {
     const { productId, productName, quantitySold, salePrice, totalSale, paymentMethod, date } = req.body;
 
@@ -297,7 +297,7 @@ app.post("/", async (req, res) => {
   }
 });
 // ✅ حذف المنتج من قاعدة البيانات
-app.delete("/products/:id", async (req, res) => {
+app.delete("/api/products/:id", async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
 
@@ -314,7 +314,7 @@ app.delete("/products/:id", async (req, res) => {
 });
 
 // في ملف routes.js أو server.js
-app.post("/sales", async (req, res) => {
+app.post("/api/sales", async (req, res) => {
   try {
     const sale = new Sale(req.body);
     await sale.save();
@@ -327,7 +327,7 @@ app.post("/sales", async (req, res) => {
 
 
 
-app.get("/sales", async (req, res) => {
+app.get("/api/sales", async (req, res) => {
   try {
     const sales = await Sale.find().sort({ date: -1 }); // ترتيب تنازلي حسب التاريخ
     res.status(200).json(sales);
@@ -340,7 +340,7 @@ app.get("/sales", async (req, res) => {
 
 
 // 🗑 حذف عملية بيع
-app.delete("/sales/:id", async (req, res) => {
+app.delete("/api/sales/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deletedSale = await Sale.findByIdAndDelete(id);
@@ -358,7 +358,7 @@ app.delete("/sales/:id", async (req, res) => {
 
 
 // 🛠️ تحديث عملية بيع
-app.put("/sales/:id", async (req, res) => {
+app.put("/api/sales/:id", async (req, res) => {
   try {
     const { id } = req.params; // الحصول على معرف العملية
     const { productName, quantitySold, salePrice, paymentMethod } = req.body; // البيانات الجديدة
@@ -404,7 +404,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // دالة إضافة جواز سفر مع دعم رفع أكثر من صورة
-app.post("/passports", upload.array("idImages", 10), async (req, res) => {
+app.post("/api/passports", upload.array("idImages", 10), async (req, res) => {
   try {
     const { fullName, passportType, amountPaid, isReserved } = req.body;
 
@@ -436,7 +436,7 @@ app.post("/passports", upload.array("idImages", 10), async (req, res) => {
 
 
 // دالة عرض الجوازات
-app.get("/passports", async (req, res) => {
+app.get("/api/passports", async (req, res) => {
   try {
     const passports = await Passport.find(); // جلب جميع الجوازات من قاعدة البيانات
     res.json(passports); // إرسال الجوازات كاستجابة في هيئة JSON
@@ -450,7 +450,7 @@ app.get("/passports", async (req, res) => {
 
 
 // دالة الحذف بناءً على الـ ID
-app.delete("/passports/:id", async (req, res) => {
+app.delete("/api/passports/:id", async (req, res) => {
   try {
     // استخدام ID من الرابط للبحث عن الجواز
     const passport = await Passport.findByIdAndDelete(req.params.id);
@@ -480,7 +480,7 @@ app.delete("/passports/:id", async (req, res) => {
   }
 });
 // دالة تعديل الجواز
-app.put("/passports/:id", upload.array("idImages", 10), async (req, res) => {
+app.put("/api/passports/:id", upload.array("idImages", 10), async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -516,6 +516,11 @@ app.put("/passports/:id", upload.array("idImages", 10), async (req, res) => {
     console.error("❌ حدث خطأ أثناء التعديل:", error);
     res.status(500).json({ message: "حدث خطأ في التعديل، يرجى المحاولة لاحقًا." });
   }
+});
+
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front/hifi', 'index.html'));
 });
 
 
