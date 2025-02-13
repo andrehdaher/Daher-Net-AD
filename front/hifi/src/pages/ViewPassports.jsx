@@ -11,7 +11,7 @@ const ViewPassports = () => {
     // جلب الجوازات من السيرفر
     const fetchPassports = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/passports");
+        const response = await axios.get("http://localhost:3000/api/passports");
         setPassports(response.data); // تخزين البيانات المسترجعة
       } catch (error) {
         console.error("❌ فشل في جلب البيانات:", error);
@@ -25,7 +25,7 @@ const ViewPassports = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/passports/${id}`);
+      const response = await axios.delete(`http://localhost:3000/api/passports/${id}`);
       setPassports(passports.filter((passport) => passport._id !== id)); // حذف الجواز من الواجهة بعد النجاح
       alert("✅ تم حذف الجواز بنجاح!");
     } catch (error) {

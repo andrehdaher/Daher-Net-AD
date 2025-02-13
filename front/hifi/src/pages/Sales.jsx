@@ -13,7 +13,7 @@ const Sales = () => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/sales");
+        const response = await axios.get("http://localhost:3000/api/sales");
         setSales(response.data);
       } catch (error) {
         console.error("❌ خطأ في جلب المبيعات:", error);
@@ -36,7 +36,7 @@ const Sales = () => {
     if (!window.confirm("⚠️ هل أنت متأكد من حذف هذه العملية؟")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/sales/${saleId}`);
+      await axios.delete(`http://localhost:3000/api/sales/${saleId}`);
       setSales(sales.filter((sale) => sale._id !== saleId));
       toast.success("✅ تم حذف العملية بنجاح!");
     } catch (error) {

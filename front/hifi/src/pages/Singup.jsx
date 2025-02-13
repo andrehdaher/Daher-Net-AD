@@ -11,7 +11,7 @@ const Signup = () => {
   const handleSignup = async () => {
     
     try {
-      await axios.post("http://localhost:3000/signup", { email, password, role }).then(() => {
+      await axios.post("http://localhost:3000/api/signup", { email, password, role }).then(() => {
       navigate("/login");  
       }
       )

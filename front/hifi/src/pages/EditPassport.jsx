@@ -19,7 +19,7 @@ const EditPassport = () => {
   useEffect(() => {
     const fetchPassport = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/passports/${id}`);
+        const response = await axios.get(`http://localhost:3000/api/passports/${id}`);
         const passportData = response.data;
         setFullName(passportData.fullName);
         setPassportType(passportData.passportType);
@@ -58,7 +58,7 @@ const EditPassport = () => {
     formData.append("isReserved", isReserved);
 
     try {
-      const response = await axios.put(`http://localhost:3000/passports/${id}`, formData, {
+      const response = await axios.put(`http://localhost:3000/api/passports/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

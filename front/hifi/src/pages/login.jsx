@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/login", { email, password })
+    axios.post("http://localhost:3000/api/login", { email, password })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role); // حفظ الدور

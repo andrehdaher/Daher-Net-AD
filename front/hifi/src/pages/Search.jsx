@@ -7,7 +7,7 @@ const Search = () => {
   const [search , setsearch] = useState('')
   const pageSearch = (e)=>{
     e.preventDefault()
-    axios.post("http://localhost:3000/search",{search}).then(() => {
+    axios.post("http://localhost:3000/api/search",{search}).then(() => {
 
     }
     ).catch((err) => {

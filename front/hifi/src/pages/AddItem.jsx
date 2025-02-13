@@ -44,7 +44,7 @@ const AddItem = () => {
 
     try {
       // إرسال الطلب إلى قاعدة البيانات
-      await axios.post("http://localhost:3000/products", newProduct);
+      await axios.post("http://localhost:3000/api/products", newProduct);
 
       toast.success("✅ تم إضافة المنتج بنجاح!");
       navigate("/"); // الرجوع إلى الصفحة الرئيسية بعد الإضافة

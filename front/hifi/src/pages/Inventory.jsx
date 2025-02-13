@@ -12,7 +12,7 @@ const Inventory = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products");
+        const response = await axios.get("http://localhost:3000/api/products");
         setProducts(response.data);
       } catch (error) {
         console.error("❌ خطأ في جلب المنتجات:", error);
@@ -57,13 +57,13 @@ const Inventory = () => {
 
     try {
       // ✅ تحديث المنتج في الـ backend
-      await axios.put(`http://localhost:3000/products/${id}`, {
+      await axios.put(`http://localhost:3000/api/products${id}`, {
         quantity: product.quantity - quantityToSell,
         totalSales: product.totalSales + totalSale,
       });
 
       // ✅ تسجيل البيع في قاعدة بيانات المبيعات
-      await axios.post("http://localhost:3000/sales", {
+      await axios.post("http://localhost:3000/api/sales", {
         productId: id,
         productName: product.name,
         quantitySold: quantityToSell,
@@ -95,7 +95,7 @@ const Inventory = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/products/${id}`);
+      await axios.delete(`http://localhost:3000/api/products/${id}`);
 
       // ✅ تحديث المنتجات بعد الحذف
       setProducts((prevProducts) => prevProducts.filter((p) => p._id !== id));

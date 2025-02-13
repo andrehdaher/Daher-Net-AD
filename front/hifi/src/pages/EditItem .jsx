@@ -45,7 +45,7 @@ const EditItem = () => {
 
     try {
       // إرسال الطلب إلى الـ Backend
-      await axios.put(`http://localhost:3000/productss/${product._id}`, {
+      await axios.put(`http://localhost:3000/api/productss/${product._id}`, {
         name: product.name,
         type: product.type,
         wholesalePrice: Number(product.wholesalePrice),

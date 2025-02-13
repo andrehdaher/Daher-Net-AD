@@ -32,7 +32,7 @@ const AddPassport = () => {
     formData.append("isReserved", isReserved);
 
     try {
-      const response = await axios.post("http://localhost:3000/passports", formData, {
+      const response = await axios.post("http://localhost:3000/api/passports", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
