@@ -17,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
+app.use(express.static(path.join(__dirname, 'front')));
 
 
 mongoose
