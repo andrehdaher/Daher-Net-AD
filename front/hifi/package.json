@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build": "your-build-command-for-frontend"
+
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
