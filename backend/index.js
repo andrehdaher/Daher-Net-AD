@@ -17,7 +17,6 @@ app.use(cors());
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
-app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 
 
 mongoose
@@ -516,11 +515,6 @@ app.put("/api/passports/:id", upload.array("idImages", 10), async (req, res) => 
     console.error("❌ حدث خطأ أثناء التعديل:", error);
     res.status(500).json({ message: "حدث خطأ في التعديل، يرجى المحاولة لاحقًا." });
   }
-});
-
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../front/hifi/build', 'index.html'));
 });
 
 

@@ -4,15 +4,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "concurrently \"cd backend && npm start\" \"cd front/hifi && npm start\"",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "your-build-command-for-backend"
+
+
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
