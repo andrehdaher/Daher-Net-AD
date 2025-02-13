@@ -515,7 +515,7 @@ app.put("/passports/:id", upload.array("idImages", 10), async (req, res) => {
 
 
 
-// ✅ تشغيل السيرفر
-app.listen(3000, () => {
-  console.log("🚀 Server running on port 3000");
+const port = process.env.PORT || 3000; // استخدام متغير البيئة
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
