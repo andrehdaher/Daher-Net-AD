@@ -13,7 +13,7 @@ const Sale = require("./models/Saleschema");
 var methodOverride = require("method-override");
 require('dotenv').config(); // تأكد من تحميل البيئة من .env
 
-
+//newwwwwwwwwwwwwwwwwwwwwww
 const app = express();
 app.use(cors());
 app.use(express.json());
