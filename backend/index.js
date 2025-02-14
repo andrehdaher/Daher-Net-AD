@@ -20,12 +20,82 @@ app.use("/uploads", express.static("uploads")); // جعل الملفات قاب�
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 
 
+
 mongoose
   .connect(
     "mongodb+srv://andrehdaher2003:UdVBUjufCUd79dqc@travelstory.svfos.mongodb.net/loginUser?retryWrites=true&w=majority&appName=travelstory"
   )
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.log("❌ MongoDB connection error:", err));
+  
+  // ✅ تسجيل مستخدم جديد (Signup)
+app.post("/api/signup", async (req, res) => {
+  const { email, password, role } = req.body;
+  if (!email || !password || !role) {
+    return res.status(400).json({ message: "Enter all fields" });
+  }
+  
+  const isUser = await User.findOne({ email });
+  if (isUser) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+  
+  // لا حاجة لتشفير كلمة المرور، فقط خزنها كما هي
+  await User.create({ email, password, role });
+
+  res.status(200).json({ message: "Signup successful" });
+});
+  // ✅ تسجيل الدخول (Login)
+  app.post("/api/login", async (req, res) => {
+    const { email, password } = req.body;
+    
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: "User not found" });
+      }
+  
+      // مقارنة كلمة المرور المدخلة بكلمة المرور المخزنة كما هي
+      if (password !== user.password) {
+        return res.status(400).json({ message: "Invalid password" });
+      }
+  
+      const token = jwt.sign({ id: user._id, role: user.role }, "secretKey", {
+        expiresIn: "100m",
+      });
+  
+      
+      res.status(200).json({ message: "Login successful", token, role: user.role });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Error logging in" });
+    }
+  });
+  
+
+
+// ✅ جلب بيانات مستخدم بواسطة البريد الإلكتروني
+app.get("/api/user/:email", async (req, res) => {
+  const { email } = req.params;
+
+  
+  
+  try {
+    const user = await addUser.findOne({user: email });
+    
+    if (!user) {
+      console.log("❌ User not found for email:", email);
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    
+    res.status(200).json(user);
+  } catch (err) {
+    console.error("❌ Error fetching user data:", err);
+    res.status(500).json({ message: "Error fetching user data" });
+  }
+});
+
 
 const verifyRole = (role) => {
   return (req, res, next) => {
@@ -47,75 +117,21 @@ const verifyRole = (role) => {
   };
 };
 
-// ✅ تسجيل مستخدم جديد (Signup)
-app.post("/api/signup", async (req, res) => {
-  const { email, password, role } = req.body;
-  if (!email || !password || !role) {
-    return res.status(400).json({ message: "Enter all fields" });
-  }
 
-  const isUser = await User.findOne({ email });
-  if (isUser) {
-    return res.status(400).json({ message: "User already exists" });
-  }
 
-  // لا حاجة لتشفير كلمة المرور، فقط خزنها كما هي
-  await User.create({ email, password, role });
 
-  res.status(200).json({ message: "Signup successful" });
-});
 
-// ✅ تسجيل الدخول (Login)
-app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
-  
+// ✅ جلب جميع المستخدمين (للمشرف فقط)
+
+app.get("/api/", async (req, res) => {
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    // مقارنة كلمة المرور المدخلة بكلمة المرور المخزنة كما هي
-    if (password !== user.password) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    const token = jwt.sign({ id: user._id, role: user.role }, "secretKey", {
-      expiresIn: "10m",
-    });
-    
-    res.status(200).json({ message: "Login successful", token, role: user.role });
+    const users = await addUser.find();
+    res.status(200).json(users);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Error logging in" });
+    res.status(500).json({ message: "Error fetching users" });
   }
 });
-
-// ✅ جلب بيانات مستخدم بواسطة البريد الإلكتروني
-app.get("/api/user/:email", async (req, res) => {
-  const { email } = req.params;
-
-  
-
-  try {
-    const user = await addUser.findOne({user: email });
-
-    if (!user) {
-      console.log("❌ User not found for email:", email);
-      return res.status(404).json({ message: "User not found" });
-    }
-
-  
-    res.status(200).json(user);
-  } catch (err) {
-    console.error("❌ Error fetching user data:", err);
-    res.status(500).json({ message: "Error fetching user data" });
-  }
-});
-
-
-
-
 
 // ✅ إضافة مستخدم جديد
 app.post("/api/add-user", async (req, res) => {
@@ -142,16 +158,6 @@ app.delete("/api/delete/:id", async (req, res) => {
   }
 });
 
-// ✅ جلب جميع المستخدمين (للمشرف فقط)
-app.get("/api/", async (req, res) => {
-  try {
-    const users = await addUser.find();
-    res.status(200).json(users);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Error fetching users" });
-  }
-});
 
 
 // ✅ تحديث بيانات المستخدم

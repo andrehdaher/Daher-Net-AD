@@ -57,7 +57,7 @@ const Inventory = () => {
 
     try {
       // ✅ تحديث المنتج في الـ backend
-      await axios.put(`http://localhost:3000/api/products${id}`, {
+      await axios.put(`http://localhost:3000/api/products/${id}`, {
         quantity: product.quantity - quantityToSell,
         totalSales: product.totalSales + totalSale,
       });
