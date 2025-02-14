@@ -18,16 +18,13 @@ const app = express();
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
-app.use(cors({
-  origin: 'http://localhost:3000',  // تأكد من إضافة رابط الـ frontend الصحيح
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
+require('dotenv').config();
 
+const ad =process.env.MONGO_URI;
 
-
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(ad)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
