@@ -11,9 +11,7 @@ const Product = require("./models/productSchema ");
 const Passport  = require("./models/passportSchema"); 
 const Sale = require("./models/Saleschema"); 
 var methodOverride = require("method-override");
-require('dotenv').config(); // تأكد من تحميل البيئة من .env
 
-//newwwwwwwwwwwwwwwwwwwwwww
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -21,9 +19,9 @@ app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 
-const mongoURI = process.env.MONGO_URI;
 
-mongoose.connect(mongoURI)
+
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
