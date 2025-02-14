@@ -11,7 +11,6 @@ const Product = require("./models/productSchema ");
 const Passport  = require("./models/passportSchema"); 
 const Sale = require("./models/Saleschema"); 
 var methodOverride = require("method-override");
-require('dotenv').config(); // تأكد من تحميل البيئة من .env
 
 //newwwwwwwwwwwwwwwwwwwwwww
 const app = express();
