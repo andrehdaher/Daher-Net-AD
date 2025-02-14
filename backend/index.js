@@ -14,10 +14,15 @@ var methodOverride = require("method-override");
 
 //newwwwwwwwwwwwwwwwwwwwwww
 const app = express();
-app.use(cors());
+
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
+app.use(cors({
+  origin: 'https://daher-net-ad-42.onrender.com',  // تأكد من إضافة رابط الـ frontend الصحيح
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 
 
