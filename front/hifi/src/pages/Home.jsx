@@ -16,7 +16,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://daher-net-ad-42.onrender.com/api/", {
+      const response = await axios.get("http://localhost:3000/api/", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 

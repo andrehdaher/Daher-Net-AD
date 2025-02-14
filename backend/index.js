@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
 app.use(cors({
-  origin: 'https://daher-net-ad-42.onrender.com',  // تأكد من إضافة رابط الـ frontend الصحيح
+  origin: 'http://localhost:3000',  // تأكد من إضافة رابط الـ frontend الصحيح
   methods: ['GET', 'POST'],
   credentials: true
 }));
