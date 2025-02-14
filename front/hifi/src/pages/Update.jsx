@@ -46,7 +46,7 @@ const Update = () => {
 
         try {
             // هنا نستخدم PUT لتحديث البيانات في الخادم
-            const response = await axios.put(`http://localhost:3000/api/update/${userData._id}`, formData);
+            const response = await axios.put(`https://daher-net-ad-43.onrender.com/api/update/${userData._id}`, formData);
 
             if (response.status === 200) { // التأكد من نجاح التحديث
                 alert("User updated successfully!");

@@ -44,7 +44,7 @@ const AddItem = () => {
 
     try {
       // إرسال الطلب إلى قاعدة البيانات
-      await axios.post("http://localhost:3000/api/products", newProduct);
+      await axios.post("https://daher-net-ad-43.onrender.com/api/products", newProduct);
 
       toast.success("✅ تم إضافة المنتج بنجاح!");
       navigate("/"); // الرجوع إلى الصفحة الرئيسية بعد الإضافة

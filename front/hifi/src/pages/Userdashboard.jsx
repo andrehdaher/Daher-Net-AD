@@ -21,7 +21,7 @@ export default function UserInvoice() {
     const fetchUserData = async () => {
       try {
         console.log("Fetching data for:", email);
-        const response = await axios.get(`http://localhost:3000/api/user/${encodeURIComponent(email)}`);
+        const response = await axios.get(`https://daher-net-ad-43.onrender.com/api/user/${encodeURIComponent(email)}`);
         setUserData(response.data);
       } catch (err) {
         setError("User not found or error fetching data");

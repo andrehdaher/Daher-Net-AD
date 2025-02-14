@@ -15,7 +15,7 @@ const EditSale = () => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/sales/${sale._id}`, {
+      await axios.put(`https://daher-net-ad-43.onrender.com/api/sales/${sale._id}`, {
         productName,
         quantitySold,
         salePrice,

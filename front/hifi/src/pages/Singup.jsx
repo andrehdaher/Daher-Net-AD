@@ -11,7 +11,7 @@ const Signup = () => {
   const handleSignup = async () => {
     
     try {
-      await axios.post("http://localhost:3000/api/signup", { email, password, role }).then(() => {
+      await axios.post("https://daher-net-ad-43.onrender.com/api/signup", { email, password, role }).then(() => {
       navigate("/login");  
       }
       )

@@ -41,7 +41,7 @@ const AddUser = () => {
     console.log("بيانات المستخدم المرسلة:", userData);
 
     try {
-      await axios.post("http://localhost:3000/api/add-user", userData);
+      await axios.post("https://daher-net-ad-43.onrender.com/api/add-user", userData);
       alert("تمت إضافة المستخدم بنجاح");
       navigate("/");
     } catch (err) {
