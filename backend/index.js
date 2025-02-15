@@ -21,19 +21,7 @@ app.use("/uploads", express.static("uploads")); // جعل الملفات قاب�
 
 
 // تفعيل CORS
-const allowedOrigins = ['https://daher-net-ad-48.onrender.com', 'http://localhost:3000']; // أضف المزيد من النطاقات المسموحة إذا لزم
-app.use(cors({
-  origin: (origin, callback) => {
-    // السماح لجميع النطاقات إذا لم يكن هناك origin (مثل أدوات Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // الطرق المسموح بها
-}));
-
+app.use(cors())
 // السماح بطلبات preflight (OPTIONS)
 app.options('*', cors());
 
@@ -544,7 +532,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../front/hifi/build", "index.html"));
 });
 
-const PORT = process.env.PORT || 10000; // Render يوفر المنفذ عبر متغير البيئة PORT
+const PORT = process.env.PORT || 3000; // Render يوفر المنفذ عبر متغير البيئة PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
