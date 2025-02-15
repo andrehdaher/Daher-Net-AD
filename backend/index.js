@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
 app.use(cors({
-  origin: "https://daher-net-ad-43.onrender.com", // رابط واجهة المستخدم على Render
+  origin: "https://daher-net-ad-44.onrender.com", // رابط واجهة المستخدم على Render
   credentials: true
 }));
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
@@ -522,9 +522,10 @@ app.put("/api/passports/:id", upload.array("idImages", 10), async (req, res) => 
   }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../front/hifi/build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../front/hifi/build", "index.html"));
 });
+
 
 const port = process.env.PORT || 3000; // استخدام متغير البيئة
 app.listen(port, () => {
