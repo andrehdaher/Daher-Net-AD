@@ -19,8 +19,9 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
 
+
 // تفعيل CORS
-const allowedOrigins = ['https://daher-net-ad-47.onrender.com', 'http://localhost:3000']; // أضف المزيد من النطاقات المسموحة إذا لزم
+const allowedOrigins = ['https://daher-net-ad-48.onrender.com', 'http://localhost:3000']; // أضف المزيد من النطاقات المسموحة إذا لزم
 app.use(cors({
   origin: (origin, callback) => {
     // السماح لجميع النطاقات إذا لم يكن هناك origin (مثل أدوات Postman)
@@ -32,6 +33,9 @@ app.use(cors({
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // الطرق المسموح بها
 }));
+
+// السماح بطلبات preflight (OPTIONS)
+app.options('*', cors());
 
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 require('dotenv').config();
