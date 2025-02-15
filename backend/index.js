@@ -12,30 +12,38 @@ const Passport  = require("./models/passportSchema");
 const Sale = require("./models/Saleschema"); 
 var methodOverride = require("method-override");
 
-//newwwwwwwwwwwwwwwwwwwwwww
+// إعداد التطبيق
 const app = express();
 
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
 
-// تفعيل CORS مع السماح لجميع المصادر أو تحديد مصدر معين
+// تفعيل CORS
+const allowedOrigins = ['https://daher-net-ad-47.onrender.com', 'http://localhost:3000']; // أضف المزيد من النطاقات المسموحة إذا لزم
 app.use(cors({
-  origin: 'https://daher-net-ad-46.onrender.com' // يمكن استخدام '*' للسماح للجميع (غير مستحسن في الإنتاج)
+  origin: (origin, callback) => {
+    // السماح لجميع النطاقات إذا لم يكن هناك origin (مثل أدوات Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // الطرق المسموح بها
 }));
-
-
-
 
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 require('dotenv').config();
 
-const ad =process.env.MONGO_URI;
+// اتصال MongoDB
+const ad = process.env.MONGO_URI;
 
 mongoose.connect(ad)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
+// التحقق من الدور (Middleware)
 const verifyRole = (role) => {
   return (req, res, next) => {
     const token = req.headers.authorization;
@@ -68,7 +76,7 @@ app.post("/api/signup", async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
 
-  // لا حاجة لتشفير كلمة المرور، فقط خزنها كما هي
+  // تخزين كلمة المرور كما هي (يمكن تحسين الأمان لاحقًا)
   await User.create({ email, password, role });
 
   res.status(200).json({ message: "Signup successful" });
@@ -84,7 +92,7 @@ app.post("/api/login", async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    // مقارنة كلمة المرور المدخلة بكلمة المرور المخزنة كما هي
+    // مقارنة كلمة المرور المدخلة
     if (password !== user.password) {
       return res.status(400).json({ message: "Invalid password" });
     }
@@ -99,6 +107,7 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ message: "Error logging in" });
   }
 });
+
 
 // ✅ جلب بيانات مستخدم بواسطة البريد الإلكتروني
 app.get("/api/user/:email", async (req, res) => {
