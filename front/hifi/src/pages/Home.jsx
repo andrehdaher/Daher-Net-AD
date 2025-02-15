@@ -16,7 +16,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://daher-net-ad-43.onrender.com/api/", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
@@ -47,7 +47,7 @@ const Home = () => {
             const newRequired = Number(user.required) + additionalAmount;
 
             // تحديث البيانات في السيرفر
-            await axios.put(`https://daher-net-ad-43.onrender.com/api/update/${user._id}`, {
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/update/${user._id}`, {
               required: newRequired,
               lastUpdatedMonth: currentDate,
             });
@@ -70,7 +70,7 @@ const Home = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`https://daher-net-ad-43.onrender.com/api/delete/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/delete/${id}`);
       setArray((prevArray) => prevArray.filter((user) => user._id !== id));
       alert("User deleted successfully!");
     } catch (err) {

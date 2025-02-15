@@ -32,7 +32,7 @@ const AddPassport = () => {
     formData.append("isReserved", isReserved);
 
     try {
-      const response = await axios.post("https://daher-net-ad-43.onrender.com/api/passports", formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/passports`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
