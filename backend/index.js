@@ -18,10 +18,15 @@ const app = express();
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use("/uploads", express.static("uploads")); // جعل الملفات قابلة للوصول
+
+// تفعيل CORS مع السماح لجميع المصادر أو تحديد مصدر معين
 app.use(cors({
-  origin: "https://daher-net-ad-45.onrender.com", // رابط واجهة المستخدم على Render
-  credentials: true
+  origin: 'https://daher-net-ad-46.onrender.com' // يمكن استخدام '*' للسماح للجميع (غير مستحسن في الإنتاج)
 }));
+
+
+
+
 app.use(express.static(path.join(__dirname, '../front/hifi/build')));
 require('dotenv').config();
 
